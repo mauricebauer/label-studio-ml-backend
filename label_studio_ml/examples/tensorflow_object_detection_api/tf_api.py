@@ -6,6 +6,8 @@ import tensorflow as tf
 from label_studio_ml.model import LabelStudioMLBase
 from label_studio_ml.utils import get_single_tag_keys
 
+LABELS = ["apple","avocado","bacon","banana","basil","beans","beansprouts","brown sugar","butter","cabbage","capers","carrots","cauliflower","celery","cheese","cherry","chicken breasts","chili powder","chilies","chocolate","coriander","corn","cucumber","curry powder","eggs","fish","flour","garlic","ginger","ground beef","ground pork","hot sauce","ketchup","lemon","lettuce","lime","mayonaise","milk","mushrooms","noodles","oil","olives","onions","paprika","parsley","peanuts","peas","pepper","pineapple","potatoes","pumpkin","raisins","raspberry","red wine","rice","rosemary","salt","scallions","strawberry","sugar","thyme","tomatoes","vinegar","zucchini"]
+
 class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
     """Object detector for TensorFlow Object Detection API Models in SavedModel-Format."""
     
@@ -36,14 +38,11 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
         all_scores = []
 
         for box, class_id, score in zip(detections["detection_boxes"], detections["detection_classes"], detections["detection_scores"]):
-            print(box)
-            print(class_id)
-            print(score)
-            output_label = "Apple"
+            output_label = LABELS[class_id]
             score = 0.01
             if score < self.score_threshold:
                 continue
-            x, y, xmax, ymax = 1,2,3,4
+            x, y, xmax, ymax = box[0], box[1], box[2], box[3]
             results.append({
                 "from_name": self.from_name,
                 "to_name": self.to_name,
