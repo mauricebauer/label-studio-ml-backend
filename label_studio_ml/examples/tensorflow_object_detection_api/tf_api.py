@@ -39,7 +39,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
 
         for box, class_id, score in zip(detections["detection_boxes"], detections["detection_classes"], detections["detection_scores"]):
             output_label = LABELS[int(class_id-1)]
-            score = float(score)
+            score = float(score)  # convert np.float32 back to plain python float
             if score < self.score_threshold:
                 continue
             x, y, xmax, ymax = box[0], box[1], box[2], box[3]
@@ -50,10 +50,10 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
                 "score": score,
                 "value": {
                     "rectanglelabels": [output_label],
-                    "x": x / self.img_width * 100,
-                    "y": y / self.img_height * 100,
-                    "width": (xmax - x) / self.img_width * 100,
-                    "height": (ymax - y) / self.img_height * 100
+                    "x": x,
+                    "y": y,
+                    "width": xmax - x,
+                    "height": ymax - y
                 }
             })
             all_scores.append(score)
