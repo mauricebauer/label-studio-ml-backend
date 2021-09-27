@@ -13,7 +13,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
         self.score_threshold = score_threshold
         self.img_height = img_height
         self.img_width = img_width
-        self.model = tf.saved_model.load(model_dir)
+        self.model = tf.keras.models.load_model(model_dir)
     
     def predict(self, tasks, **kwargs):
         assert len(tasks) == 1
