@@ -10,6 +10,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
     
     def __init__(self, score_threshold=0.3, img_height=640, img_width=640, model_dir="/home/ubuntu/savedmodel", **kwargs):
         super().__init__(**kwargs)
+        print(tf)
         self.score_threshold = score_threshold
         self.img_height = img_height
         self.img_width = img_width
