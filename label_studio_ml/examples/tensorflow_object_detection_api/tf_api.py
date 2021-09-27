@@ -4,17 +4,19 @@ from PIL import Image
 from io import BytesIO
 import tensorflow as tf
 from label_studio_ml.model import LabelStudioMLBase
+from label_studio_ml.utils import get_single_tag_keys
 
 class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
     """Object detector for TensorFlow Object Detection API Models in SavedModel-Format."""
     
     def __init__(self, score_threshold=0.3, img_height=640, img_width=640, model_dir="/home/ubuntu/savedmodel", **kwargs):
         super().__init__(**kwargs)
-        print(tf)
         self.score_threshold = score_threshold
         self.img_height = img_height
         self.img_width = img_width
         self.model = tf.saved_model.load(model_dir)
+        self.from_name, self.to_name, self.value, self.labels_in_config = get_single_tag_keys(
+            self.parsed_label_config, 'RectangleLabels', 'Image')
     
     def predict(self, tasks, **kwargs):
         assert len(tasks) == 1
@@ -37,15 +39,14 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
             print(box)
             print(class_id)
             print(score)
-            continue
             output_label = "Apple"
             score = 0.01
             if score < self.score_threshold:
                 continue
             x, y, xmax, ymax = 1,2,3,4
             results.append({
-                "from_name": "FROM_NAME",
-                "to_name": "TO_NAME",
+                "from_name": self.from_name,
+                "to_name": self.to_name,
                 "type": "rectanglelabels",
                 "score": score,
                 "value": {
