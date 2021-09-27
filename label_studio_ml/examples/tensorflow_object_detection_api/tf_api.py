@@ -38,7 +38,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
         all_scores = []
 
         for box, class_id, score in zip(detections["detection_boxes"], detections["detection_classes"], detections["detection_scores"]):
-            output_label = LABELS[class_id]
+            output_label = LABELS[int(class_id)]
             score = 0.01
             if score < self.score_threshold:
                 continue
