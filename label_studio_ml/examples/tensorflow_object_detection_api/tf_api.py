@@ -42,7 +42,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
             score = float(score)  # convert np.float32 back to plain python float
             if score < self.score_threshold:
                 continue
-            x, y, xmax, ymax = box[0], box[1], box[2], box[3]
+            y, x, ymax, xmax = float(box[0]), float(box[1]), float(box[2]), float(box[3])
             results.append({
                 "from_name": self.from_name,
                 "to_name": self.to_name,
