@@ -21,14 +21,8 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
     def predict(self, tasks, **kwargs):
         assert len(tasks) == 1
         task = tasks[0]
-        image_url = "http://localhost:8080" + task["data"].get(self.value)
-        print(f"Downloading {image_url}")
-        image_data = requests.get(image_url)
-        print(image_data.status_code)
-        print(str(image_data.content))
-        image_file = f"/tmp/image.{image_url.split('.')[-1]}"
-        with open(image_file, "wb") as f:
-            f.write(image_data.content)
+        filename = task["data"].get(self.value).split("/")[-1]
+        image_file = f"/home/ubuntu/.local/share/label-studio/media/upload/{filename}"
         image = np.array(Image.open(image_file).resize(self.img_height, self.img_width))
         image_tf = tf.convert_to_tensor(image)
         image_tf = image_tf[tf.newaxis, ...]
