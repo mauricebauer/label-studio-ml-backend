@@ -50,10 +50,10 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
                 "score": score,
                 "value": {
                     "rectanglelabels": [output_label],
-                    "x": x,
-                    "y": y,
-                    "width": xmax - x,
-                    "height": ymax - y
+                    "x": x * 100,
+                    "y": y * 100,
+                    "width": (xmax - x) * 100,
+                    "height": (ymax - y) * 100
                 }
             })
             all_scores.append(score)
