@@ -24,6 +24,8 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
         image_url = "http://localhost:8080" + task["data"].get(self.value)
         print(f"Downloading {image_url}")
         image_data = requests.get(image_url)
+        print(image_data.status_code)
+        print(str(image_data.content))
         image_file = f"/tmp/image.{image_url.split('.')[-1]}"
         with open(image_file, "wb") as f:
             f.write(image_data.content)
