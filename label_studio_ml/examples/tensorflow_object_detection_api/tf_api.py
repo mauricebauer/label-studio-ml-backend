@@ -22,6 +22,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
         assert len(tasks) == 1
         task = tasks[0]
         image_url = "http://localhost:8080" + task["data"].get(self.value)
+        print(f"Downloading {image_url}")
         image_data = requests.get(image_url, stream=True).raw
         image = np.array(Image.open(image_data).resize(self.img_height, self.img_width))
         image_tf = tf.convert_to_tensor(image)
