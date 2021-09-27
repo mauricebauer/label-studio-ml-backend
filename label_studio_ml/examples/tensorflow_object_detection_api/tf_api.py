@@ -11,7 +11,7 @@ LABELS = ["apple","avocado","bacon","banana","basil","beans","beansprouts","brow
 class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
     """Object detector for TensorFlow Object Detection API Models in SavedModel-Format."""
     
-    def __init__(self, score_threshold=0.3, img_height=640, img_width=640, model_dir="/home/ubuntu/savedmodel", **kwargs):
+    def __init__(self, score_threshold=0.5, img_height=640, img_width=640, model_dir="/home/ubuntu/savedmodel", **kwargs):
         super().__init__(**kwargs)
         self.score_threshold = score_threshold
         self.img_height = img_height
