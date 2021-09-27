@@ -16,7 +16,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
         self.img_width = img_width
         self.model = tf.saved_model.load(model_dir)
         self.from_name, self.to_name, self.value, self.labels_in_config = get_single_tag_keys(
-            self.parsed_label_config, 'Image')
+            self.parsed_label_config, 'RectangleLabels', 'Image')
     
     def predict(self, tasks, **kwargs):
         assert len(tasks) == 1
