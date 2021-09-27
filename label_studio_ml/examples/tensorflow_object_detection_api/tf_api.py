@@ -23,7 +23,7 @@ class TensorFlowObjectDetectionAPI(LabelStudioMLBase):
         task = tasks[0]
         filename = task["data"].get(self.value).split("/")[-1]
         image_file = f"/home/ubuntu/.local/share/label-studio/media/upload/{filename}"
-        image = np.array(Image.open(image_file).resize(self.img_height, self.img_width))
+        image = np.array(Image.open(image_file).resize((self.img_height, self.img_width)))
         image_tf = tf.convert_to_tensor(image)
         image_tf = image_tf[tf.newaxis, ...]
         detections = self.model(image_tf)
